@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="bn">
+<head>
+  <meta charset="utf-8" />
+  <title>শুভ বিজয়া দশমী ও দুর্গাপূজা</title>
+  <style>
+    body{
+    
+      font-family:'Noto Sans Bengali', Arial, sans-serif;
+      background:#fff8f0;
+      padding:20px;
+      text-align:center;
+      margin:0;
+    }
+    h1{color:#c62828; margin-bottom:10px;}
+    .page{
+      display:none;
+      min-height:100vh;
+      padding:30px;
+    }
+    .active{
+      display:block;
+    }
+    img.poster{
+      max-width:100%;
+      height:auto;
+      border-radius:15px;
+      box-shadow:0 6px 12px rgba(0,0,0,0.1);
+      margin-bottom:20px;
+    }
+    form{
+      background:#fff;
+      padding:20px;
+      border-radius:12px;
+      box-shadow:0 6px 12px rgba(0,0,0,0.1);
+      display:inline-block;
+      margin-bottom:25px;
+    }
+    input{
+      padding:10px;
+      margin:8px;
+      border:1px solid #ccc;
+      border-radius:6px;
+    }
+    button{
+      background:#c62828;
+      color:#fff;
+      padding:10px 18px;
+      border:0;
+      border-radius:8px;
+      cursor:pointer;
+      margin-top:10px;
+    }
+    .msg{
+      margin-top:20px;
+      font-size:18px;
+      color:#333;
+      white-space:pre-line;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Page 1: Happy Durga Puja -->
+  <div class="page active" id="page1">
+    <h1>🌸 শুভ দুর্গাপূজা 🌸</h1>
+    <img src="durga_puja.jpg" alt="Durga Puja Poster" class="poster">
+    <p>আজকের আনন্দ উপভোগ করুন! 🎉</p>
+    <button onclick="nextPage(2)">Next</button>
+  </div>
+
+  <!-- Page 2: Name + Age Form -->
+  <div class="page" id="page2">
+    <h1>🌸 আপনার তথ্য দিন 🌸</h1>
+    <form onsubmit="showMessage(event)">
+      <input type="text" id="name" placeholder="আপনার নাম লিখুন" required />
+      <input type="number" id="age" placeholder="আপনার বয়স লিখুন" required />
+      <button type="submit">দেখুন শুভেচ্ছা</button>
+    </form>
+    <div class="msg" id="output"></div>
+  </div>
+
+  <!-- Page 3: Doshomi Wish -->
+  <div class="page" id="page3">
+    <h1>🌸 শুভ বিজয়া দশমী 🌸</h1>
+    <div class="msg" id="finalWish"></div>
+  </div>
+
+<script>
+  const teacherNames = ["anup","ruma","choitika","doyel","janmejoy","sudip",
+                        "naren","jayanto","joyonto","palash","bipul","shormistha"];
+  let finalMessage = "";
+
+  function nextPage(pageNumber){
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    document.getElementById('page'+pageNumber).classList.add('active');
+  }
+
+  function showMessage(event){
+    event.preventDefault();
+    const name = document.getElementById("name").value.trim();
+    const age = parseInt(document.getElementById("age").value);
+
+    if(age > 21){
+      const nameLower = name.toLowerCase();
+      if(teacherNames.includes(nameLower)){
+        finalMessage = `শুভ বিজয়া দশমী, ${name}!\n\nআমার আন্তরিক প্রণাম গ্রহণ করবেন। 
+আপনার আশীর্বাদ ও ভালোবাসায় যতদূর এগিয়েছি, আগামীতেও সেই পথেই এগোতে পারি।`;
+      } else {
+        finalMessage = `শুভ বিজয়া দশমী, ${name}!\n\nআপনাদের জন্য রইলো অনেক শ্রদ্ধা ও শুভেচ্ছা। 
+আপনারা আমাদের বড়, আপনার অভিজ্ঞতা ও দিকনির্দেশনা সবসময় আমাদের জীবনের আলো।`;
+      }
+    }
+    else if(age < 21){
+      finalMessage = `শুভ বিজয়া দশমী, ${name}!\n\nতোমার জন্য রইলো অনেক ভালোবাসা ও আশীর্বাদ। 
+মন দিয়ে পড়াশোনা করো, স্বপ্ন বড় করে দেখো, আর সর্বদা হাসিখুশি থেকো।`;
+    }
+    else{
+      finalMessage = `শুভ বিজয়া দশমী, প্রিয় ${name}!\n\nমা দুর্গার আশীর্বাদে জীবনের সব দুঃখ দূরে যাক। 
+আমাদের বন্ধুত্ব সবসময় অটুট থাকুক।`;
+    }
+
+    document.getElementById("output").innerText = finalMessage;
+
+    // Auto go to page 3 after showing message
+    setTimeout(()=> {
+      document.getElementById('finalWish').innerText = finalMessage;
+      nextPage(3);
+    }, 1000);
+  }
+</script>
+
+</body>
+</html>
